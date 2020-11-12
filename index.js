@@ -1,4 +1,5 @@
 const http = require("http");
+const fs = require("fs");
 const sha512 = require("js-sha512");
 
 http
@@ -6,7 +7,8 @@ http
     res.writeHead(200, { "Content-Type": "text/plain" });
 
     if (req.url === "/digest") {
-      const digest = sha512(Date.now().toString());
+      const data = fs.readFileSync("./input.txt");
+      const digest = sha512(data);
       res.write(`digest: ${digest} `);
     } else {
       res.write(`test-server: ${Date.now()} `);
